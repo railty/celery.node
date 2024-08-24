@@ -102,6 +102,12 @@ export default class RedisBackend implements CeleryBackend {
     return this.redis.lrange("celery", 0, -1).then(tasks => tasks.map((task)=>JSON.parse(task)));
   }
 
+  public keys(pattern: string) {
+    return this.redis.keys(pattern);
+  }
+
+
+
   /**
    * @method RedisBackend#set
    * @private

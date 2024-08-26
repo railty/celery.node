@@ -93,20 +93,19 @@ export default class RedisBackend implements CeleryBackend {
     this.redis.lrange()
     return this.get(`${keyPrefix}${taskId}`).then(msg => JSON.parse(msg));
   }
-  /**
-   * @method RedisBackend#listTasks
-   * @param
-   * @returns {Promise}
-   */
-  public listTasks(): Promise<object[]>  {
-    return this.redis.lrange("celery", 0, -1).then(tasks => tasks.map((task)=>JSON.parse(task)));
-  }
 
-  public keys(pattern: string) {
+  //////////////////////////////////////////////////////////
+  //Patched by Shawn
+  getKeyPrefix() {
+    return keyPrefix;
+  }
+  keys(pattern) {
     return this.redis.keys(pattern);
   }
-
-
+  lrange(key, start, stop){
+    return this.redis.lrange(key, start, stop);
+  }
+  //////////////////////////////////////////////////////////
 
   /**
    * @method RedisBackend#set

@@ -1,4 +1,4 @@
-import * as Redis from "ioredis";
+import Redis from "ioredis";
 import { CeleryBackend } from ".";
 
 /**
@@ -14,7 +14,7 @@ const keyPrefix = "celery-task-meta-";
  * @exports
  */
 export default class RedisBackend implements CeleryBackend {
-  redis: Redis.Redis;
+  redis: Redis;
 
   /**
    * Redis backend class
@@ -90,7 +90,6 @@ export default class RedisBackend implements CeleryBackend {
    * @returns {Promise}
    */
   public getTaskMeta(taskId: string): Promise<object> {
-    this.redis.lrange()
     return this.get(`${keyPrefix}${taskId}`).then(msg => JSON.parse(msg));
   }
 

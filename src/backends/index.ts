@@ -1,6 +1,5 @@
 import * as url from "url";
 import RedisBackend from "./redis";
-import AMQPBackend from "./amqp";
 import FirestoreBackend from "./firestore";
 
 export interface CeleryBackend {
@@ -46,10 +45,6 @@ export function newCeleryBackend(
   const brokerProtocol = getProtocol(CELERY_BACKEND);
   if (['redis', 'rediss'].indexOf(brokerProtocol) > -1) {
     return new RedisBackend(CELERY_BACKEND, CELERY_BACKEND_OPTIONS);
-  }
-
-  if (['amqp', 'amqps'].indexOf(brokerProtocol) > -1) {
-    return new AMQPBackend(CELERY_BACKEND, CELERY_BACKEND_OPTIONS);
   }
 
   if (['firestore'].indexOf(brokerProtocol) > -1) {

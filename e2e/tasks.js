@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import celery from "celery-node";
 import xml2js from  'xml2js';
-import serviceAccount from "./firequeue.sa.js";
+import serviceAccount from "../test/firequeue.sa.js";
 import { v4 } from 'uuid';
 
 const dataFolder = "./invoices/";

@@ -72,7 +72,7 @@ describe("AsyncResult", () => {
         });
     });
 
-    it("should throw when status is failure", done => {
+    it("should throw when status is failure - redis", done => {
       // Arrange
       const testResult = "100";
       const testStatus = "FAILURE";

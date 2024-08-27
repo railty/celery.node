@@ -2,6 +2,7 @@ import * as admin from 'firebase-admin';
 import { v4 } from "uuid";
 import { CeleryBroker } from ".";
 import { Message } from "../message";
+import { runInThisContext } from 'vm';
 
 const rootName = "celery";
 class FirestoreMessage extends Message {
@@ -62,6 +63,7 @@ export default class FirestoreBroker implements CeleryBroker {
    * @returns {Promise} promises that continues if Firestore disconnected.
    */
   public disconnect(): Promise<void> {
+    this.closing = true;
     return new Promise((resolve)=>resolve());
   }
 
@@ -136,9 +138,9 @@ export default class FirestoreBroker implements CeleryBroker {
     queue: string,
     callback: Function
   ): void {
-    setTimeout(()=>{
+    process.nextTick(() =>
       this.recieveOneOnNextTick(index, resolve, queue, callback)
-    }, 1000*2);
+    );
   }
 
   /**
@@ -210,6 +212,9 @@ export default class FirestoreBroker implements CeleryBroker {
 
       return new FirestoreMessage(rawMsg);
     }
-    return null;
+    //return null;
+    return new Promise((resolve)=>{
+      setTimeout(()=>{resolve(null)}, 1000);
+    });
   }
 }

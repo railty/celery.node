@@ -73,7 +73,7 @@ describe("node celery worker with redis broker", () => {
   });
 });
 
-describe("node celery worker with amqp broker", () => {
+describe("node celery worker with redis broker", () => {
   const worker = new Worker(
     "redis://localhost:6379/0",
     "redis://localhost:6379/0"

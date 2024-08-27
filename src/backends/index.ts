@@ -1,6 +1,7 @@
 import * as url from "url";
 import RedisBackend from "./redis";
 import AMQPBackend from "./amqp";
+import FirestoreBackend from "./firestore";
 
 export interface CeleryBackend {
   isReady: () => Promise<any>;
@@ -14,7 +15,7 @@ export interface CeleryBackend {
  * @private
  * @constant
  */
-const supportedProtocols = ["redis", "rediss", "amqp", "amqps"];
+const supportedProtocols = ["redis", "rediss", "amqp", "amqps", "firestore"];
 
 /**
  * takes url string and after parsing scheme of url, returns protocol.
@@ -49,6 +50,10 @@ export function newCeleryBackend(
 
   if (['amqp', 'amqps'].indexOf(brokerProtocol) > -1) {
     return new AMQPBackend(CELERY_BACKEND, CELERY_BACKEND_OPTIONS);
+  }
+
+  if (['firestore'].indexOf(brokerProtocol) > -1) {
+    return new FirestoreBackend(CELERY_BACKEND, CELERY_BACKEND_OPTIONS);
   }
 
   // do not reach here.

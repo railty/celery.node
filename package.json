@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "amqplib": "^0.10.4",
+    "firebase-admin": "^12.4.0",
     "ioredis": "^5.4.1",
     "uuid": "^10.0.0"
   }

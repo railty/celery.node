@@ -6,7 +6,7 @@ import { CeleryConf } from "../../src/app/conf";
 import serviceAccount from "../firequeue.sa";
 
 describe("node celery worker with firestore broker", function(){
-  this.timeout(10000);
+  this.timeout(30000);
 
   const worker = new Worker('firestore://', 'firestore://');
   (worker.conf.CELERY_BACKEND_OPTIONS as any).sa = serviceAccount;
